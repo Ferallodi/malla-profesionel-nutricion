@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malla Nutrición - Interactiva</title>
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f0ff;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #6a0dad;
+      text-align: center;
+    }
+
+    .semestres {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .semestre {
+      border: 2px solid #6a0dad;
+      border-radius: 15px;
+      padding: 15px;
+      background-color: #eee0ff;
+      width: 280px;
+    }
+
+    .semestre h2 {
+      text-align: center;
+      color: #6a0dad;
+      margin-bottom: 15px;
+    }
+
+    .ramo {
+      border: 1px solid #6a0dad;
+      border-radius: 8px;
+      padding: 10px;
+      background-color: #f5e6ff;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .ramo:hover {
+      background-color: #d2b3ff;
+      transform: scale(1.02);
+    }
+
+    .ramo.aprobado {
+      background-color: #b380ff;
+      color: white;
+      text-decoration: line-through;
+    }
+
+    .ramo.bloqueado {
+      background-color: #f0f0f0;
+      border-color: #ccc;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Interactiva - Nutrición y Dietética</h1>
+  <div class="semestres" id="contenedor"></div>
+
+  <script>
+    const semestres = {
+      "I Semestre": [
+        "Química general",
+        "Matemática",
+        "Histología",
+        "Anatomía",
+        "Biología celular y molecular",
+        "Introducción a la profesión",
+        "Alimentos I",
+        "Formación general",
+        "Inglés I"
+      ],
+      "II Semestre": [
+        "Química orgánica y Bioquímica general",
+        "Fisiología general",
+        "Agentes vivos de enfermedad",
+        "Ciencias sociales y salud",
+        "Alimentos II",
+        "Búsqueda y sistematización de información científica",
+        "Inglés II"
+      ],
+      "III Semestre": [
+        "Bioquímica nutricional",
+        "Fisiología de sistemas",
+        "Evaluación del estado nutricional",
+        "Epidemiología y Bioestadística",
+        "Tecnología de los alimentos",
+        "Técnicas culinarias I",
+        "Inglés III"
+      ],
+      "IV Semestre": [
+        "Fundamentos de alimentación",
+        "Genética y Nutrigenómica",
+        "Dietética infanto juvenil",
+        "Sistema de salud pública",
+        "Bromatología",
+        "Técnicas culinarias II",
+        "Educación, conducta y salud"
+      ],
+      "V Semestre": [
+        "Inmunología",
+        "Dietética del adulto y adulto mayor",
+        "Gestión en salud",
+        "Higiene en la producción de alimentos",
+        "Planificación en servicios de alimentación colectiva",
+        "Cultura y seguridad alimentaria",
+        "Comunicación y educación en alimentos y nutrición",
+        "Modulo integrado interdisciplinario multiprofesional I"
+      ],
+      "VI Semestre": [
+        "Fisiopatología y Farmacología I",
+        "Dietoterapia I",
+        "Desarrollo social y comunitario",
+        "Organización en servicios de alimentación colectiva",
+        "Metodología de investigación",
+        "Planificación de programas educativos",
+        "Formación general 2"
+      ],
+      "VII Semestre": [
+        "Fisiopatología y Farmacología II",
+        "Dietoterapia II",
+        "Nutrición comunitaria I",
+        "Calidad e inocuidad alimentaria",
+        "Dirección en servicios de alimentación colectiva",
+        "Diseño de proyecto de investigación"
+      ],
+      "VIII Semestre": [
+        "Ejercicio y salud",
+        "Nutrición clínica",
+        "Nutrición comunitaria II",
+        "Seminario alimentos y nutrición",
+        "Control de servicios de alimentación colectiva",
+        "Ejecución proyecto de investigación",
+        "Módulo integrado interdisciplinario multiprofesional II"
+      ],
+      "IX y X Semestre": [
+        "Práctica profesional en nutrición clínica infanto juvenil",
+        "Práctica profesional en nutrición clínica adulto y adulto mayor",
+        "Práctica profesional en nutrición comunitaria",
+        "Practica profesional en gestión de servicios de alimentación"
+      ]
+    };
+
+    const contenedor = document.getElementById("contenedor");
+    const estado = {};
+
+    function crearMalla() {
+      for (const semestre in semestres) {
+        const divSemestre = document.createElement("div");
+        divSemestre.className = "semestre";
+
+        const titulo = document.createElement("h2");
+        titulo.textContent = semestre;
+        divSemestre.appendChild(titulo);
+
+        semestres[semestre].forEach(ramo => {
+          const divRamo = document.createElement("div");
+          divRamo.className = "ramo";
+          divRamo.textContent = ramo;
+
+          divRamo.addEventListener("click", () => {
+            estado[ramo] = !estado[ramo];
+            divRamo.classList.toggle("aprobado", estado[ramo]);
+          });
+
+          divSemestre.appendChild(divRamo);
+        });
+
+        contenedor.appendChild(divSemestre);
+      }
+    }
+
+    crearMalla();
+  </script>
+</body>
+</html>
