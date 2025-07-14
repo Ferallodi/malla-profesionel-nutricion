@@ -1,55 +1,103 @@
-const ramos = [
-  { id: 'quimica_general', nombre: 'Química general', requisitos: [], desbloquea: ['quimica_organica', 'bioquimica_general'] },
-  { id: 'matematica', nombre: 'Matemática', requisitos: [], desbloquea: ['quimica_organica', 'bioquimica_general'] },
-  { id: 'histologia', nombre: 'Histología', requisitos: [], desbloquea: ['fisiologia_sistemas'] },
-  { id: 'anatomia', nombre: 'Anatomía', requisitos: [], desbloquea: ['fisiologia_sistemas'] },
-  { id: 'biologia_celular', nombre: 'Biología celular y molecular', requisitos: [], desbloquea: ['quimica_organica', 'bioquimica_general', 'fisiologia_general', 'agentes_vivos'] },
-  { id: 'introduccion_profesion', nombre: 'Introducción a la profesión', requisitos: [], desbloquea: [] },
-  { id: 'alimentos_1', nombre: 'Alimentos I', requisitos: [], desbloquea: ['alimentos_2'] },
-  { id: 'formacion_general_1', nombre: 'Formación general', requisitos: [], desbloquea: [] },
-  { id: 'ingles_1', nombre: 'Inglés I', requisitos: [], desbloquea: ['ingles_2'] },
+const ramos = {
+  "Química general": [],
+  "Matemática": [],
+  "Histología": [],
+  "Anatomía": [],
+  "Biología celular y molecular": [],
+  "Introducción a la profesión": [],
+  "Alimentos I": [],
+  "Formación general": [],
+  "Inglés I": [],
 
-  { id: 'quimica_organica', nombre: 'Química orgánica y Bioquímica general', requisitos: ['quimica_general', 'matematica', 'biologia_celular'], desbloquea: ['bioquimica_nutricional'] },
-  { id: 'fisiologia_general', nombre: 'Fisiología general', requisitos: ['biologia_celular'], desbloquea: ['fisiologia_sistemas'] },
-  { id: 'agentes_vivos', nombre: 'Agentes vivos de enfermedad', requisitos: ['biologia_celular'], desbloquea: ['higiene'] },
-  { id: 'ciencias_sociales', nombre: 'Ciencias sociales y salud', requisitos: [], desbloquea: ['educacion_salud'] },
-  { id: 'alimentos_2', nombre: 'Alimentos II', requisitos: ['alimentos_1'], desbloquea: ['cultura_seguridad', 'tecnologia_alimentos', 'tecnicas_culinarias_1', 'evaluacion_nutricional'] },
-  { id: 'busqueda_cientifica', nombre: 'Búsqueda científica', requisitos: [], desbloquea: [] },
-  { id: 'ingles_2', nombre: 'Inglés II', requisitos: ['ingles_1'], desbloquea: ['ingles_3'] }
-];
+  "Química orgánica y Bioquímica general": ["Química general", "Matemática", "Biología celular y molecular"],
+  "Fisiología general": ["Biología celular y molecular"],
+  "Agentes vivos de enfermedad": ["Biología celular y molecular"],
+  "Ciencias sociales y salud": [],
+  "Alimentos II": ["Alimentos I"],
+  "Búsqueda y sistematización de información científica": [],
+  "Inglés II": ["Inglés I"],
 
-const mallaDiv = document.getElementById('malla');
+  "Bioquímica nutricional": ["Química orgánica y Bioquímica general"],
+  "Fisiología de sistemas": ["Histología", "Anatomía", "Fisiología general"],
+  "Evaluación del estado nutricional": ["Alimentos II"],
+  "Epidemiología y Bioestadística": [],
+  "Tecnología de los alimentos": ["Alimentos II"],
+  "Técnicas culinarias I": ["Alimentos II"],
+  "Inglés III": ["Inglés II"],
 
-function crearElementoRamo(ramo) {
-  const el = document.createElement('div');
-  el.className = 'ramo bloqueado';
-  el.id = ramo.id;
-  el.textContent = ramo.nombre;
+  "Fundamentos de alimentación": ["Bioquímica nutricional"],
+  "Genética y Nutrigenómica": ["Bioquímica nutricional"],
+  "Dietética infanto juvenil": ["Bioquímica nutricional", "Fisiología de sistemas", "Evaluación del estado nutricional"],
+  "Sistema de salud pública": ["Epidemiología y Bioestadística"],
+  "Bromatología": ["Tecnología de los alimentos"],
+  "Técnicas culinarias II": ["Técnicas culinarias I"],
+  "Educación, conducta y salud": ["Ciencias sociales y salud"],
 
-  el.addEventListener('click', () => {
-    el.classList.add('aprobado');
-    ramo.desbloquea.forEach(id => {
-      const desbloqueado = document.getElementById(id);
-      if (desbloqueado) {
-        const requisitosOk = ramos.find(r => r.id === id).requisitos.every(req => document.getElementById(req).classList.contains('aprobado'));
-        if (requisitosOk) {
-          desbloqueado.classList.remove('bloqueado');
-        }
-      }
-    });
-  });
+  "Inmunología": ["Genética y Nutrigenómica"],
+  "Dietética del adulto y adulto mayor": ["Dietética infanto juvenil"],
+  "Gestión en salud": ["Sistema de salud pública"],
+  "Higiene en la producción de alimentos": ["Agentes vivos de enfermedad"],
+  "Planificación en servicios de alimentación colectiva": ["Técnicas culinarias II"],
+  "Cultura y seguridad alimentaria": ["Alimentos II"],
+  "Comunicación y educación en alimentos y nutrición": ["Educación, conducta y salud"],
+  "Modulo integrado interdisciplinario multiprofesional I": [],
 
-  return el;
-}
+  "Fisiopatología y Farmacología I": ["Inmunología"],
+  "Dietoterapia I": ["Inmunología", "Dietética del adulto y adulto mayor"],
+  "Desarrollo social y comunitario": ["Cultura y seguridad alimentaria"],
+  "Organización en servicios de alimentación colectiva": ["Planificación en servicios de alimentación colectiva"],
+  "Metodología de investigación": [],
+  "Planificación de programas educativos": ["Comunicación y educación en alimentos y nutrición", "Dietética del adulto y adulto mayor"],
+  "Formación general 2": [],
 
-function renderMalla() {
-  ramos.forEach(ramo => {
-    const elemento = crearElementoRamo(ramo);
-    if (ramo.requisitos.length === 0) {
-      elemento.classList.remove('bloqueado');
+  "Fisiopatología y Farmacología II": ["Fisiopatología y Farmacología I"],
+  "Dietoterapia II": ["Dietoterapia I"],
+  "Nutrición comunitaria I": ["Desarrollo social y comunitario", "Planificación de programas educativos"],
+  "Calidad e inocuidad alimentaria": ["Higiene en la producción de alimentos"],
+  "Dirección en servicios de alimentación colectiva": ["Organización en servicios de alimentación colectiva"],
+  "Diseño de proyecto de investigación": ["Metodología de investigación"],
+
+  "Ejercicio y salud": ["Dietoterapia II"],
+  "Nutrición clínica": ["Fisiopatología y Farmacología II", "Dietoterapia II"],
+  "Nutrición comunitaria II": ["Nutrición comunitaria I"],
+  "Seminario alimentos y nutrición": ["Calidad e inocuidad alimentaria", "Dietoterapia II"],
+  "Control de servicios de alimentación colectiva": ["Dirección en servicios de alimentación colectiva"],
+  "Ejecución proyecto de investigación": ["Diseño de proyecto de investigación"],
+  "Módulo integrado interdisciplinario multiprofesional II": ["Modulo integrado interdisciplinario multiprofesional I"],
+
+  "Práctica profesional en nutrición clínica infanto juvenil": ["Ejercicio y salud", "Nutrición clínica", "Nutrición comunitaria II", "Seminario alimentos y nutrición", "Control de servicios de alimentación colectiva", "Ejecución proyecto de investigación", "Módulo integrado interdisciplinario multiprofesional II"],
+  "Práctica profesional en nutrición clínica adulto y adulto mayor": ["Ejercicio y salud", "Nutrición clínica", "Nutrición comunitaria II", "Seminario alimentos y nutrición", "Control de servicios de alimentación colectiva", "Ejecución proyecto de investigación", "Módulo integrado interdisciplinario multiprofesional II"],
+  "Práctica profesional en nutrición comunitaria": ["Ejercicio y salud", "Nutrición clínica", "Nutrición comunitaria II", "Seminario alimentos y nutrición", "Control de servicios de alimentación colectiva", "Ejecución proyecto de investigación", "Módulo integrado interdisciplinario multiprofesional II"],
+  "Practica profesional en gestión de servicios de alimentación": ["Ejercicio y salud", "Nutrición clínica", "Nutrición comunitaria II", "Seminario alimentos y nutrición", "Control de servicios de alimentación colectiva", "Ejecución proyecto de investigación", "Módulo integrado interdisciplinario multiprofesional II"]
+};
+
+const estado = {};
+
+const mallaDiv = document.getElementById("malla");
+
+function actualizarRamos() {
+  mallaDiv.innerHTML = "";
+
+  for (const ramo in ramos) {
+    const bloqueado = ramos[ramo].some(req => !estado[req]);
+    const aprobado = estado[ramo];
+
+    const div = document.createElement("div");
+    div.className = "ramo";
+    if (bloqueado) div.classList.add("bloqueado");
+    if (aprobado) div.classList.add("aprobado");
+
+    div.textContent = ramo;
+
+    if (!bloqueado) {
+      div.addEventListener("click", () => {
+        estado[ramo] = !estado[ramo];
+        actualizarRamos();
+      });
     }
-    mallaDiv.appendChild(elemento);
-  });
+
+    mallaDiv.appendChild(div);
+  }
 }
 
-renderMalla();
+actualizarRamos();
